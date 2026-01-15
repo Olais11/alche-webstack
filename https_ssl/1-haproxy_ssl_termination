@@ -1,0 +1,18 @@
+global
+    daemon
+
+defaults
+    mode http
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
+
+frontend http_front
+    bind *:80
+    bind *:443 ssl crt /etc/letsencrypt/live/www.moikan.tech/moikan.pem
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server web01 54.86.66.40:80 check
+    server web02 44.201.255.158:80 check
